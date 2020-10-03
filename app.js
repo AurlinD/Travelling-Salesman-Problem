@@ -20,7 +20,9 @@ const readCSV = (data) => {
 
 // Main algorithm function
 const algorithmTSP = (data) => {
-  let path = [[], 0];
+  let path = [
+    [], 0
+  ];
   let origin = data[0];
   path[0].push(origin.City);
   let latA = parseFloat(data[0].Latitude);
@@ -38,10 +40,12 @@ const shortestPath = (path, data, latA, lonA) => {
   for (cityDetails of data) {
     if (cityDetails.City !== "") {
       let nameB = cityDetails.City;
+
       if (path[0].indexOf(nameB) === -1) {
         let latB = parseFloat(cityDetails.Latitude);
         let lonB = parseFloat(cityDetails.Longitude);
         let dist = haversineDistance([latA, lonA], [latB, lonB]);
+
         if (minDistance > dist) {
           minDistance = dist;
           minDistanceCity = {
@@ -55,6 +59,7 @@ const shortestPath = (path, data, latA, lonA) => {
   }
   if (minDistance === Number.POSITIVE_INFINITY) {
     let finalPath = returnToHome(path, data, latA, lonA);
+
     return finalPath;
   } else {
     path[0].push(minDistanceCity.City);
@@ -65,7 +70,7 @@ const shortestPath = (path, data, latA, lonA) => {
   }
 };
 
-// Haversine Forumula, looked up stackedOverflow
+// Haversine Forumula, looked up via stackedOverflow
 // Calculates distance in kilometers when givin lat and lon of 2 coordinates
 const haversineDistance = ([lat1, lon1], [lat2, lon2]) => {
   const toRadian = (angle) => (Math.PI / 180) * angle;
